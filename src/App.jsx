@@ -42,10 +42,15 @@ export default function App() {
             <span style={styles.dot} />
           </span>
         </div>
-        <h1 style={styles.title}>RCRT Preview Smoke</h1>
-        <p style={styles.subtitle}>
-          Device frame chrome test &mdash; resize to confirm scaling
-        </p>
+        <div style={styles.brand}>
+          <img src="/logo.png" alt="logo" style={styles.logo} />
+          <div>
+            <h1 style={styles.title}>RCRT Preview Smoke</h1>
+            <p style={styles.subtitle}>
+              Device frame chrome &mdash; resize or swap device in the toolbar
+            </p>
+          </div>
+        </div>
       </header>
 
       <section style={styles.card}>
@@ -86,6 +91,41 @@ export default function App() {
         </button>
       </section>
 
+      <section style={styles.logTestBar}>
+        <button
+          style={styles.logBtn}
+          onClick={() => {
+            console.log("smoke: console.log fired", { count, viewport });
+          }}
+        >
+          log
+        </button>
+        <button
+          style={styles.logBtn}
+          onClick={() => {
+            console.warn("smoke: console.warn fired");
+          }}
+        >
+          warn
+        </button>
+        <button
+          style={styles.logBtn}
+          onClick={() => {
+            console.error("smoke: console.error fired");
+          }}
+        >
+          error
+        </button>
+        <button
+          style={styles.logBtn}
+          onClick={() => {
+            Promise.reject(new Error("smoke: unhandled rejection"));
+          }}
+        >
+          reject
+        </button>
+      </section>
+
       <footer style={styles.footer}>
         <span>HMR live &middot; Vite dev</span>
         <span>{now.toISOString().slice(11, 19)} UTC</span>
@@ -121,6 +161,13 @@ const styles = {
     overflow: "auto",
   },
   header: { display: "flex", flexDirection: "column", gap: 8 },
+  brand: { display: "flex", alignItems: "center", gap: 12, marginTop: 6 },
+  logo: {
+    width: 44,
+    height: 44,
+    display: "block",
+    filter: "drop-shadow(0 4px 12px rgba(99, 102, 241, 0.45))",
+  },
   statusBar: {
     display: "flex",
     justifyContent: "space-between",
@@ -224,6 +271,21 @@ const styles = {
     borderRadius: 8,
     fontSize: 12,
     cursor: "pointer",
+  },
+  logTestBar: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: 6,
+  },
+  logBtn: {
+    background: "rgba(59, 130, 246, 0.22)",
+    color: "#e2e8f0",
+    border: "1px solid rgba(59, 130, 246, 0.4)",
+    padding: "6px 0",
+    borderRadius: 8,
+    fontSize: 11,
+    cursor: "pointer",
+    fontFamily: "SF Mono, ui-monospace, Menlo, Consolas, monospace",
   },
   footer: {
     display: "flex",
